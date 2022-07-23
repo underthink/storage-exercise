@@ -15,7 +15,7 @@ Alternatively, you can run this through docker:
 
 ```bash
 $ docker build --target application_image -t storage_app .
-$ docker run -v ${pwd}/data:/data storage_app
+$ docker run -v $(pwd)/data:/data storage_app
 ```
 
 ### Unit Tests
