@@ -13,13 +13,19 @@ def parse_args():
     parser.add_argument(
         "--opening-balances",
         help="CSV containing opening port balances",
-        default=Path("/data/storage_asof_20200101.csv"),
+        default=Path("data/storage_asof_20200101.csv"),
         type=Path,
     )
     parser.add_argument(
         "--movements",
         help="CSV containing cargo movements",
-        default=Path("/data/cargo_movements.csv"),
+        default=Path("data/cargo_movements.csv"),
+        type=Path,
+    )
+    parser.add_argument(
+        "--output",
+        help="Target file to write to",
+        default=Path("storage_asof_20200114.csv"),
         type=Path,
     )
     parser.add_argument(
@@ -41,4 +47,7 @@ if __name__ == "__main__":
         port_balances, read_movements(args.movements), args.cutoff
     )
 
-    write_balances(sys.stdout, port_balances)
+    with args.output.open("w") as output_csv_fh:
+        write_balances(output_csv_fh, port_balances)
+
+    print(f"Output written to {args.output.absolute()}")
